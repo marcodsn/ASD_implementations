@@ -18,6 +18,19 @@ public class Misc {
         return start;
     }
 
+    public static int binarySearchRec(int[] a, int x, int p, int q) {
+        if (q > 1) {
+            int div = q / 2;
+            q = div;
+            if (a[p + div - 1] < x) {
+                p += div;
+            }
+            return binarySearchRec(a, x, p, q);
+        }
+        // System.out.println(a[start]);
+        return p;
+    }
+
     public static int searchMin(int[] a) {
         int min = a[0];
         for (int j = 1; j < a.length; j++) {
@@ -82,7 +95,7 @@ public class Misc {
     }
 
     static boolean sumEqualK(int[] a, int k) {
-        for (int i = 0; i < a.length-1; i++) {
+        for (int i = 0; i < a.length - 1; i++) {
             for (int j = i + 1; j < a.length; j++) {
                 if (a[i] + a[j] == k) {
                     return true;
@@ -108,7 +121,7 @@ public class Misc {
         }
     }
 
-    /*static boolean moreThanHalfW(int[] a) { // Only checks if the first element is repeated more than n/2 times
+    /*static boolean majorityFinderW(int[] a) { // Only checks if the first element is repeated more than n/2 times
         int n = a.length;
         // int goal = (int) Math.ceil((double) n / 2);
         int c = 0;
@@ -122,10 +135,10 @@ public class Misc {
         return c > 0;
     }*/
 
-    static int moreThanHalf(int[] a) {
+    static int majorityFinder(int[] a) {
         int el = a[0];
         int c = 1;
-        for (int i = 1; i < a.length-1; i++) {
+        for (int i = 1; i < a.length - 1; i++) {
             if (c == 0) {
                 el = a[i];
                 c++;
@@ -136,5 +149,17 @@ public class Misc {
             }
         }
         return el;
+    }
+
+    // Given an ordered Hilbert's vector and an input k, find k in the vector within O(logn) time where n in the first
+    // position for which a[n] ≥ k
+    static int kInHilbertHotelVector(int[] a, int k, int p, int q) {
+        if (a[q] < k) {
+            p = q;
+            q = 2*q;
+            return kInHilbertHotelVector(a, k, p, q);
+        } else {
+            return binarySearchRec(a, k, p, q);
+        }
     }
 }
